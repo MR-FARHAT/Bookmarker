@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookmarker</title>
+  <link rel="icon"
+    href="./images/pngtree-bookmark-icon-vector-illustration-in-filled-style-for-any-purpose-png-image_975418.png">
+  <!-- Font Awesome Library  -->
+  <link rel="stylesheet" href="./css/all.min.css" />
+  <!-- Bootstrap - -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <!-- CSS File -->
+  <link rel="stylesheet" href="./css/style.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <section class="main-page min-vh-100">
+    <div class="container">
+      <div class="main-title text-center mb-4">
+        <h1 class="display-1 pt-5 ">Bookmarker</h1>
+        <h3 class="text-dark"><span id="element"></span></h3>
+      </div>
+      <div class="input-field d-flex flex-column justify-content-center align-items-center ">
+        <label for="siteName" class="w-100 fw-semibold  ms-3">Site Name</label>
+        <input id="siteName" class="webName w-100 border-0  ps-3 mb-3" type="text" placeholder="Website Name" required>
+
+        <label for="siteUrl" class="w-100 fw-semibold ms-3">Site Name</label>
+        <input id="siteUrl" class="webUrl w-100  border-0  ps-3 " type="url" placeholder="Website URL" required>
+
+        <button onclick="addWebsite()" class="submit-btn btn btn-outline-success   mt-4 text-start align-self-start">Add
+          Bookmark</button>
+      </div>
+
+      <table class="table text-white text-center my-4">
+        <thead id="tHead" class="fw-semibold  ">
+          <tr>
+            <td>Index</td>
+            <td>Website Name</td>
+            <td>Visit</td>
+            <td>Delete</td>
+          </tr>
+        </thead>
+        <tbody id="tBody">
+
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+  <script>
+    var typed = new Typed('#element', {
+      strings: ['Bookmark Your Favourite Site'],
+      typeSpeed: 50,
+      loop: true,
+      loopCount: Infinity,
+      backSpeed: 50,
+    });
+  </script>
+  <script src="./index.js"></script>
+</body>
+
+</html>

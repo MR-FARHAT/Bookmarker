@@ -1,0 +1,40 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Quicksand", sans-serif;
+}
+
+.main-page {
+  background-image: url(../images/bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.main-title h1 {
+  font-family: 'Righteous', sans-serif;
+  color: rgb(234, 159, 21) !important;
+}
+
+.webName,
+.webUrl {
+  height: 35px;
+  border-radius: 20px;
+}
+
+.submit-btn {
+  border-radius: 100vh;
+}
+
+.table {
+  --bs-table-bg: rgba(255, 255, 255, 0.479) !important;
+  --bs-table-border-color: var(--bs-border-color);
+}
+
+a {
+  text-decoration: none;
+  color: rgb(0, 0, 0)
+}
