@@ -1,65 +1,76 @@
-var siteNameInput = document.getElementById("siteName");
-var siteUrlInput = document.getElementById("siteUrl");
+const siteNameInput = document.getElementById("siteName");
+const siteUrlInput = document.getElementById("siteUrl");
+const tableBody = document.getElementById("tBody");
+const formMessage = document.getElementById("formMessage");
 
+const STORAGE_KEY = "websites";
+const urlPattern = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/\S*)?$/;
 
-var websites;
-if (localStorage.getItem("websites") != null) {
-  websites = JSON.parse(localStorage.getItem("websites"));
-  displayWebsite();
-} else {
-  websites = [];
-}
+let websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+displayWebsites();
 
 function addWebsite() {
-  
-if (validateUrl(siteUrlInput.value)) {
-  var webSite = {
-    name: siteNameInput.value,
-    url: siteUrlInput.value,
-  };
-  websites.push(webSite);
-  displayWebsite();
+  const name = siteNameInput.value.trim();
+  const url = siteUrlInput.value.trim();
 
-  localStorage.setItem("websites", JSON.stringify(websites));
-  clearForm();
-}
-  
-  
-}
-
-function displayWebsite() {
-  var webs = "";
-  for (var i = 0; i < websites.length; i++) {
-    webs += `<tr>
-    <td>${i + 1}</td>
-    <td>${websites[i].name}</td>
-    <td><button class="btn btn-outline-info"><a href="${websites[i].url}" target="_blank">Visit</a></button></td>
-
-    <td><button onclick="deleteWebsite(${i})" class="btn btn-outline-danger">Delete</button></td>
-  </tr>`;
+  if (!name) {
+    showMessage("Please enter a site name.");
+    return;
   }
 
-  document.getElementById("tBody").innerHTML = webs;
+  if (!urlPattern.test(url)) {
+    showMessage("Please enter a valid URL, e.g. https://example.com");
+    return;
+  }
+
+  websites.push({ name, url: withProtocol(url) });
+  saveWebsites();
+  displayWebsites();
+  clearForm();
+}
+
+function deleteWebsite(index) {
+  websites.splice(index, 1);
+  saveWebsites();
+  displayWebsites();
+}
+
+function displayWebsites() {
+  tableBody.innerHTML = websites
+    .map(
+      (site, i) => `<tr>
+        <td>${i + 1}</td>
+        <td>${escapeHtml(site.name)}</td>
+        <td><a class="btn btn-outline-info" href="${escapeHtml(site.url)}" target="_blank" rel="noopener noreferrer">Visit</a></td>
+        <td><button onclick="deleteWebsite(${i})" class="btn btn-outline-danger">Delete</button></td>
+      </tr>`
+    )
+    .join("");
+}
+
+function saveWebsites() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(websites));
 }
 
 function clearForm() {
   siteNameInput.value = "";
   siteUrlInput.value = "";
+  showMessage("");
 }
 
-
-function deleteWebsite (index) {
-  websites.splice(index, 2);
-  localStorage.setItem('websites', JSON.stringify(websites));
-  displayWebsite();
+function showMessage(text) {
+  formMessage.textContent = text;
 }
 
-
-function validateUrl (urlName) {
-  var urlRegEx = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.){1,2}[a-zA-Z]{2,}(\/[^\s]*)?$/;
-  return urlRegEx.test(urlName);
+function withProtocol(url) {
+  return /^https?:\/\//i.test(url) ? url : `https://${url}`;
 }
 
-
-
-
+function escapeHtml(value) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
